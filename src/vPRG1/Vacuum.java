@@ -8,6 +8,8 @@ class Vacuum {
         final int TILE_DIRTIER = 2;
         final int TILE_VERY_DIRTY = 3;
         final int TILE_EXTREMELY_DIRTY = 4;
+        final int X_AXIS = 0;
+        final int Y_AXIS = 1;
 
         int[][] surface = {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
@@ -21,20 +23,29 @@ class Vacuum {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         };
+        int vacuumPosition[] = {0,0};
 
         contaminate(surface);
-        printWorld(surface);
+        printWorld(surface, vacuumPosition);
     }
 
-    static void printWorld(int[][] surface) {
-        System.out.println("---".repeat(surface[0].length));
-        for (int[] row : surface) {
-            for (int column : row) {
-                System.out.print(mapValueToTile(column));
+    static void printWorld(int[][] aMap, int[] vacuumPosition) {
+        System.out.println("---".repeat(aMap[0].length));
+        for (int row = 0; row < aMap.length; row++) {
+            for (int column = 0; column < aMap[row].length; column++) {
+                if (vacuumPosition[0] == row && vacuumPosition[1] == column) {
+                    System.out.print(mapVacuum());
+                } else {
+                    System.out.print(mapValueToTile(aMap[row][column]));
+                }
             }
             System.out.println();
         }
-        System.out.println("---".repeat(surface[0].length));
+        System.out.println("---".repeat(aMap[0].length));
+    }
+    
+    static String mapVacuum() {
+        return "(O)";
     }
 
     static String mapValueToTile(int value) {
