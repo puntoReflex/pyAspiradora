@@ -8,7 +8,7 @@
 
 |Asignatura|Versión / Artefacto(s)|
 |-|:-:|
-PRG1|vPRG1
+PRG1|[vPRG1](src/vPRG1/README.md)
 PRG2|vPRG2
 EDA1|vEDA1
 EDA2|vEDA2
