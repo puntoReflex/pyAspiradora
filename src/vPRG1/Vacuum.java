@@ -27,12 +27,19 @@ class Vacuum {
     }
 
     static void printWorld(int[][] surface) {
+        System.out.println("---".repeat(surface[0].length));
         for (int[] row : surface) {
             for (int column : row) {
-                System.out.print(column);
+                System.out.print(mapValueToTile(column));
             }
             System.out.println();
         }
+        System.out.println("---".repeat(surface[0].length));
+    }
+
+    static String mapValueToTile(int value) {
+        String[] tiles = { " . ", "...", "ooo", "OOO", "***" };
+        return tiles[value];
     }
 
     static void contaminate(int[][] aMap) {
