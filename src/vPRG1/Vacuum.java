@@ -26,7 +26,14 @@ class Vacuum {
         int vacuumPosition[] = {0,0};
 
         contaminate(surface);
-        printWorld(surface, vacuumPosition);
+        boolean surfaceIsDirty = true;
+
+        while(surfaceIsDirty){
+            moveVacuum(vacuumPosition, surface);
+            cleanWorld(surface, vacuumPosition);
+            printWorld(surface, vacuumPosition);
+            surfaceIsDirty = isDirty(surface);
+        }
     }
 
     static void printWorld(int[][] aMap, int[] vacuumPosition) {
