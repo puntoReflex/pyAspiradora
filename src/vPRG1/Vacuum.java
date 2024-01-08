@@ -63,6 +63,9 @@ class Vacuum {
     }
 
     static void cleanWorld(int[][] surface, int[] vacuumPosition) {
+        if (surface[vacuumPosition[0]][vacuumPosition[1]] > 0) {
+            surface[vacuumPosition[0]][vacuumPosition[1]]--;
+        }
     }
 
     static boolean isDirty(int[][] surface) {
