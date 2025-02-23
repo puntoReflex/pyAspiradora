@@ -2,7 +2,7 @@
 
 ## Análisis de componentes clave
 
-### Inicialización (contaminate)
+### Inicialización (`contaminate()`)
 
 ```java
 for (int row = 0; row < aMap.length; row++) {
@@ -14,7 +14,7 @@ for (int row = 0; row < aMap.length; row++) {
 
 Complejidad: O(n*m) donde n,m son las dimensiones del mapa
 
-### Movimiento (moveVacuum)
+### Movimiento (`moveVacuum()`)
 
 ```java
 int[] movement = directions[(int) (Math.random() * directions.length)];
@@ -24,7 +24,7 @@ vacuumPosition[1] = vacuumPosition[1] + movement[1];
 
 Complejidad: O(1) por iteración
 
-### Verificación de Limpieza (isDirty)
+### Verificación de limpieza (`isDirty()`)
 
 ```java
 for (int row = 0; row < surface.length; row++) {
