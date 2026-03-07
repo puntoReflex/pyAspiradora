@@ -25,14 +25,19 @@ class Vacuum {
         };
         int vacuumPosition[] = { 0, 0 };
 
+        int battery = 5 * surface.length * surface[0].length;
+
         contaminate(surface);
         boolean surfaceIsDirty = true;
+        boolean hasBattery = battery > 0;
 
-        while (surfaceIsDirty) {
+        while (surfaceIsDirty && hasBattery) {
             moveVacuum(vacuumPosition, surface);
             cleanWorld(surface, vacuumPosition);
-            printWorld(surface, vacuumPosition);
+            battery--;
+            printWorld(surface, vacuumPosition, battery);
             surfaceIsDirty = isDirty(surface);
+            hasBattery = battery > 0;
             pause(0.5);
         }
     }
@@ -78,7 +83,7 @@ class Vacuum {
         return false;
     }
 
-    static void printWorld(int[][] aMap, int[] vacuumPosition) {
+    static void printWorld(int[][] aMap, int[] vacuumPosition, int battery) {
         cleanScreen();
         System.out.println("---".repeat(aMap[0].length));
         for (int row = 0; row < aMap.length; row++) {
@@ -92,6 +97,7 @@ class Vacuum {
             System.out.println();
         }
         System.out.println("---".repeat(aMap[0].length));
+        System.out.println("Batería restante: " + battery);
     }
 
     static String mapVacuum() {
