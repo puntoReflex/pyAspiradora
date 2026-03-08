@@ -107,8 +107,9 @@ class Vacuum {
     static boolean isDirty(int[][] surface) {
         for (int row = 0; row < surface.length; row++) {
             for (int column = 0; column < surface[row].length; column++) {
-                if (surface[row][column] > 0) 
+                if (surface[row][column] > 0) {
                     return true;
+                }
             }
         }
         return false;
