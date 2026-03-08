@@ -34,7 +34,7 @@ class Vacuum {
         boolean surfaceIsDirty = true;
 
         while (surfaceIsDirty) {
-            moveVacuum(vacuumPosition, surface);
+            moveVacuum(vacuumPosition, surface, battery);
             cleanWorld(surface, vacuumPosition, bag, battery);
             printWorld(surface, vacuumPosition, battery, bag);
             surfaceIsDirty = isDirty(surface);
@@ -54,7 +54,7 @@ class Vacuum {
         battery[0] = battery[1];
     }
 
-    static void moveVacuum(int[] vacuumPosition, int[][] surface) {
+    static void moveVacuum(int[] vacuumPosition, int[][] surface, int[] battery) {
 
         int[] previousPosition = new int[] { vacuumPosition[0], vacuumPosition[1] };
 
@@ -71,6 +71,11 @@ class Vacuum {
         if (invalidPosition(vacuumPosition, surface)) {
             vacuumPosition[0] = previousPosition[0];
             vacuumPosition[1] = previousPosition[1];
+        }
+
+        battery[0]--;
+        if (battery[0] <= 0) {
+            rechargeBattery(battery);
         }
     }
 
