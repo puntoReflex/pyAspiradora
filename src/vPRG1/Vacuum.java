@@ -5,24 +5,23 @@ import java.util.Scanner;
 class Vacuum {
     public static void main(String[] args) {
 
+        final int TILE_FURNITURE = -1;
         final int TILE_CLEAN = 0;
         final int TILE_DIRTY = 1;
         final int TILE_DIRTIER = 2;
         final int TILE_VERY_DIRTY = 3;
         final int TILE_EXTREMELY_DIRTY = 4;
-        final int X_AXIS = 0;
-        final int Y_AXIS = 1;
 
         int[][] surface = {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1,-1,-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
-                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1, 0, 0, 0 },
+                { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,-1,-1, 0, 0, 0 },
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         };
         int vacuumPosition[] = { 0, 0 };
@@ -30,7 +29,7 @@ class Vacuum {
         int[] battery = { 5 * surface.length * surface[0].length, 5 * surface.length * surface[0].length };
         int[] bag = { 0, 3 * surface.length * surface[0].length };
 
-        contaminate(surface);
+        contaminate(surface, TILE_FURNITURE);
         boolean surfaceIsDirty = true;
 
         while (surfaceIsDirty) {
@@ -84,8 +83,11 @@ class Vacuum {
     }
 
     static boolean invalidPosition(int[] position, int[][] surface) {
-        return position[0] < 0 || position[0] >= surface.length ||
-                position[1] < 0 || position[1] >= surface[0].length;
+        final int TILE_FURNITURE = -1;
+        boolean isOutBounds = position[0] < 0 || position[0] >= surface.length ||
+                              position[1] < 0 || position[1] >= surface[0].length;
+        
+        return isOutBounds || surface[position[0]][position[1]] == TILE_FURNITURE;
     }
 
     static void cleanWorld(int[][] surface, int[] vacuumPosition, int[] bag, int[] battery) {
@@ -135,13 +137,15 @@ class Vacuum {
 
     static String mapValueToTile(int value) {
         String[] tiles = { " . ", "...", "ooo", "OOO", "***" };
-        return tiles[value];
+        return value == -1 ? "###" : tiles[value];
     }
 
-    static void contaminate(int[][] aMap) {
+    static void contaminate(int[][] aMap, int furnitureTile) {
         for (int row = 0; row < aMap.length; row++) {
             for (int column = 0; column < aMap[row].length; column++) {
-                aMap[row][column] = (int) (Math.random() * 5);
+                if (aMap[row][column] != furnitureTile) {
+                    aMap[row][column] = (int) (Math.random() * 5);
+                }
             }
         }
     }
