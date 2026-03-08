@@ -34,12 +34,16 @@ class Vacuum {
         boolean surfaceIsDirty = true;
 
         while (surfaceIsDirty) {
-            moveVacuum(vacuumPosition, surface, battery);
-            cleanWorld(surface, vacuumPosition, bag, battery);
+            operateVacuum(surface, vacuumPosition, bag, battery);
             printWorld(surface, vacuumPosition, battery, bag);
             surfaceIsDirty = isDirty(surface);
             pause(0.5);
         }
+    }
+
+    static void operateVacuum(int[][] surface, int[] vacuumPosition, int[] bag, int[] battery) {
+        moveVacuum(vacuumPosition, surface, battery);
+        cleanWorld(surface, vacuumPosition, bag, battery);
     }
 
     static void emptyBag(int[] bag) {
